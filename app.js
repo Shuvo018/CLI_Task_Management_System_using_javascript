@@ -14,7 +14,7 @@ function askValid(question, validator, callback) {
   ask(question, function(answer) {
     var err = validator(answer);
     if (err) {
-      console.log('  ✖  ' + err);
+      console.log('    ' + err);
       askValid(question, validator, callback);
     } else {
       callback(answer);
@@ -47,9 +47,9 @@ function addTask() {
 
           var result = taskService.addTask(title, description, priority, dueDate);
           if (result.success) {
-            console.log('\n  ✔  ' + result.message + '\n');
+            console.log('\n    ' + result.message + '\n');
           } else {
-            console.log('\n  ✖  ' + result.message + '\n');
+            console.log('\n    ' + result.message + '\n');
           }
           showMenu();
 
@@ -79,12 +79,12 @@ function searchTask() {
 
         if (statusRaw !== '') {
           var sErr = utils.validateStatus(statusRaw);
-          if (sErr) { console.log('\n  ✖  ' + sErr + '\n'); return showMenu(); }
+          if (sErr) { console.log('\n    ' + sErr + '\n'); return showMenu(); }
         }
 
         if (priorityRaw !== '') {
           var pErr = utils.validatePriority(priorityRaw);
-          if (pErr) { console.log('\n  ✖  ' + pErr + '\n'); return showMenu(); }
+          if (pErr) { console.log('\n    ' + pErr + '\n'); return showMenu(); }
         }
 
         if (titleQuery === '' && statusRaw === '' && priorityRaw === '') {
@@ -114,7 +114,7 @@ function updateStatus() {
   askValid('  Enter Task ID: ', utils.validateId, function(id) {
     var task = taskService.findById(id);
     if (!task) {
-      console.log('\n  ✖  No task found with ID ' + id + '.\n');
+      console.log('\n    No task found with ID ' + id + '.\n');
       return showMenu();
     }
 
@@ -123,7 +123,7 @@ function updateStatus() {
 
     askValid('  Enter new Status: ', utils.validateStatus, function(status) {
       var result = taskService.updateStatus(id, status);
-      console.log('\n  ✔  ' + result.message + '\n');
+      console.log('\n    ' + result.message + '\n');
       showMenu();
     });
   });
@@ -137,7 +137,7 @@ function deleteTask() {
   askValid('  Enter Task ID: ', utils.validateId, function(id) {
     var task = taskService.findById(id);
     if (!task) {
-      console.log('\n  ✖  No task found with ID ' + id + '.\n');
+      console.log('\n    No task found with ID ' + id + '.\n');
       return showMenu();
     }
 
@@ -150,7 +150,7 @@ function deleteTask() {
         return showMenu();
       }
       var result = taskService.deleteTask(id);
-      console.log('\n  ✔  ' + result.message + '\n');
+      console.log('\n  ' + result.message + '\n');
       showMenu();
     });
   });
@@ -171,7 +171,7 @@ function showMenu() {
       rl.close();
       process.exit(0);
     } else {
-      console.log('\n  ✖  Invalid choice. Enter 1 to 6.\n');
+      console.log('\n  Invalid choice. Enter 1 to 6.\n');
       showMenu();
     }
   });
